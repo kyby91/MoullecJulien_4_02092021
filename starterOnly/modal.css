@@ -92,12 +92,14 @@ img {
 
 
 
- @media screen and (max-width: 540px) {
+@media screen and (max-width: 540px) {
   .topnav a {display: none;}
   .topnav a.icon {
     float: right;
     display: block;
-    margin-top: -15px;
+  }
+  .hero-headline{
+    width: 81%;
   }
 } 
 
@@ -499,7 +501,7 @@ footer {
     white-space: normal;
   }
   .hero-text {
-    width: unset;
+    width: 81%;
     font-size: 1.5rem;
   }
   .hero-img img {
