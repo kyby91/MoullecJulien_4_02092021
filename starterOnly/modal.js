@@ -20,10 +20,13 @@ const last = document.getElementById("last")
 const lastError = document.getElementById("lastError")
 
 const email = document.getElementById("email")
+const emailError = document.getElementById("emailError")
 
 const birthdate = document.getElementById("birthdate")
+const birthdateError = document.getElementById("birthdateError")
 
 const quantity = document.getElementById("quantity")
+const quantityError = document.getElementById("quantityError")
 
 const location1 = document.getElementById("location1")
 const location2 = document.getElementById("location2")
@@ -32,8 +35,14 @@ const location4 = document.getElementById("location4")
 const location5 = document.getElementById("location5")
 const location6 = document.getElementById("location6")
 const city = document.getElementById("city")
+const cityError = document.getElementById("cityError")
 
 const checkbox1 = document.getElementById("checkbox1")
+const checkbox1Error = document.getElementById("checkbox1Error")
+
+let validations = [];
+
+const validateBtn = document.querySelector(".button")
 
 
 // launch modal event
@@ -60,16 +69,15 @@ function checkFirstElementValue() {
     firstError.style.fontSize = "20px";
     firstError.style.display = "block";
     console.log("ok")
-    return false
     } else {
       firstError.style.display = "none";
       first.style.borderColor = "black";
-      return true
+      validations.push("true");
+      verif1 = true;
+      console.log(verif1)
     }
 }
-
 first.addEventListener("input", checkFirstElementValue)
-
 
 // last
 function checkLastElementValue() {
@@ -83,20 +91,25 @@ function checkLastElementValue() {
     } else {
       lastError.style.display = "none";
       last.style.borderColor = "black";
+      validations.push(true)
       return true
     }
 }
-
 last.addEventListener("input", checkLastElementValue)
 
 // email
 function checkEmail() {
   let regexp = /^([a-z0-9_\.-]+\@[\da-z\.-]+\.[a-z\.]{2,6})$/
   if(regexp.test(email.value)){
-    console.log("ok")
+    emailError.style.display = "none";
+    email.style.borderColor = "black";
     return true
   } else {
-    console.log("pas ok")
+    emailError.textContent = "L'adresse mail n'est pas valide";
+    emailError.style.color = "red";
+    email.style.borderColor = "red";
+    emailError.style.fontSize = "20px";
+    emailError.style.display = "block";
     return false
   }
 }
@@ -105,7 +118,7 @@ email.addEventListener("input", checkEmail)
 
 //Birthdate
 function checkBirthDate() {
-  let regexp = /^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$/
+  let regexp = /^((19[3-9]+[0-9]|200[0-9])-(0?[1-9]|1[0-2])-(0?[1-9]|[12]\d|3[01])|(0?[1-9]|[12]\d|3[01])[/](0?[1-9]|1[0-2])[/](19[3-9]+[0-9]|200[0-6]))$/
   if(regexp.test(birthdate.value)){
     console.log("nice")
     return true
@@ -115,15 +128,20 @@ function checkBirthDate() {
   }
 }
 birthdate.addEventListener("input", checkBirthDate)
-
+console.log(birthdate.value)
 
 //quantity
 function checkQuantity() {
   if(quantity.value == ''){
-    console.log("mop")
+    quantityError.textContent = "Indiquer un nombre de participation";
+    quantityError.style.color = "red";
+    quantity.style.borderColor = "red";
+    quantityError.style.fontSize = "20px";
+    quantityError.style.display = "block";
     return false
   } else {
-    console.log("ok")
+    quantityError.style.display = "none";
+    quantity.style.borderColor = "black";
     return true
   }
 }
@@ -132,14 +150,18 @@ quantity.addEventListener("input", checkQuantity)
 //city
 function checkCity() {
   if(!(location1.checked || location2.checked || location3.checked || location4.checked || location5.checked || location6.checked)) {
-    console.log("ok")
+    cityError.textContent = "Indiquer un nombre de participation";
+    cityError.style.color = "red";
+    city.style.borderColor = "red";
+    cityError.style.fontSize = "20px";
+    cityError.style.display = "block";
     return false
   } else {
-    console.log("ono")
+    cityError.style.display = "none";
+    city.style.borderColor = "black";
     return true
   }
 }
-
 city.addEventListener("input", checkCity)
 
 
@@ -147,12 +169,28 @@ city.addEventListener("input", checkCity)
 
 function checkBox() {
   if(checkbox1.checked) {
-    console.log("ik")
+    checkbox1Error.style.display = "none";
+    checkbox1.style.borderColor = "black";
     return true
   } else {
-    console.log("pm")
+    checkbox1Error.textContent = "Veuillez accepter les conditions";
+    checkbox1Error.style.color = "red";
+    checkbox1.style.borderColor = "red";
+    checkbox1Error.style.fontSize = "20px";
+    checkbox1Error.style.display = "block";
     return false
   }
 }
-
 checkbox1.addEventListener("input", checkBox)
+
+
+//validation global
+
+function checkGlobalValidation() {
+
+}
+
+
+let inputState = { 
+  birthdate : false
+}

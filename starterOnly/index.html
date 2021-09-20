@@ -94,6 +94,7 @@
                   id="email"
                   name="email"
                 /><br>
+                <p id="emailError"></p>
               </div>
               <div
                 class="formData">
@@ -104,12 +105,14 @@
                   id="birthdate"
                   name="birthdate"
                 /><br>
+                <p id="birthdateError"></p>
               </div>
               <div
                 class="formData">
                 <label>À combien de tournois GameOn avez-vous déjà participé ?</label><br>
                 <input type="number" class="text-control" id="quantity" name="quantity" min="0" max="99">
               </div>
+              <p id="quantityError"></p>
               <p class="text-label">Quelles villes ?</p>
               <div
                 class="formData" id="city">
@@ -180,7 +183,7 @@
                   Portland</label
                 >
               </div>
-
+              <p id="cityError"></p>
               <div
                 class="formData">
                 <input
@@ -193,6 +196,7 @@
                   <span class="checkbox-icon"></span>
                   J'ai lu et accepté les conditions d'utilisation.
                 </label>
+                <p id="checkbox1Error"></p>
                 <br>
                 <input class="checkbox-input" type="checkbox" id="checkbox2" />
                 <label class="checkbox2-label" for="checkbox2">
