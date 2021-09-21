@@ -40,9 +40,7 @@ const cityError = document.getElementById("cityError")
 const checkbox1 = document.getElementById("checkbox1")
 const checkbox1Error = document.getElementById("checkbox1Error")
 
-let validations = [];
-
-const validateBtn = document.querySelector(".button")
+const validateBtn = document.getElementById("validate")
 
 
 // launch modal event
@@ -62,19 +60,19 @@ function closeModal() {
 
 // first
 function checkFirstElementValue() {
-  if(first.value.length < 2) {
+  if(first.value.length < 2 || first.value === " ") {
     firstError.textContent = "Veuillez entrer 2 caractères minimum";
     firstError.style.color = "red";
     first.style.borderColor = "red";
     firstError.style.fontSize = "20px";
     firstError.style.display = "block";
-    console.log("ok")
+    inputState.first = false;
+    console.log(first.value)
     } else {
       firstError.style.display = "none";
       first.style.borderColor = "black";
-      validations.push("true");
-      verif1 = true;
-      console.log(verif1)
+      inputState.first = true;
+      console.log(first)
     }
 }
 first.addEventListener("input", checkFirstElementValue)
@@ -87,12 +85,11 @@ function checkLastElementValue() {
     last.style.borderColor = "red";
     lastError.style.fontSize = "20px";
     lastError.style.display = "block";
-    return false
+    inputState.last = false;
     } else {
       lastError.style.display = "none";
       last.style.borderColor = "black";
-      validations.push(true)
-      return true
+      inputState.last = true;
     }
 }
 last.addEventListener("input", checkLastElementValue)
@@ -103,14 +100,14 @@ function checkEmail() {
   if(regexp.test(email.value)){
     emailError.style.display = "none";
     email.style.borderColor = "black";
-    return true
+    inputState.mail = true;
   } else {
     emailError.textContent = "L'adresse mail n'est pas valide";
     emailError.style.color = "red";
     email.style.borderColor = "red";
     emailError.style.fontSize = "20px";
     emailError.style.display = "block";
-    return false
+    inputState.mail = false;
   }
 }
 email.addEventListener("input", checkEmail)
@@ -120,15 +117,19 @@ email.addEventListener("input", checkEmail)
 function checkBirthDate() {
   let regexp = /^((19[3-9]+[0-9]|200[0-9])-(0?[1-9]|1[0-2])-(0?[1-9]|[12]\d|3[01])|(0?[1-9]|[12]\d|3[01])[/](0?[1-9]|1[0-2])[/](19[3-9]+[0-9]|200[0-6]))$/
   if(regexp.test(birthdate.value)){
-    console.log("nice")
-    return true
+    birthdateError.style.display = "none";
+    birthdate.style.borderColor = "black";
+    inputState.date = true;
   } else {
-    console.log("why")
-    return false
+    birthdateError.textContent = "L'âge n'est pas valide";
+    birthdateError.style.color = "red";
+    birthdate.style.borderColor = "red";
+    birthdateError.style.fontSize = "20px";
+    birthdateError.style.display = "block";
+    inputState.date = false;
   }
 }
 birthdate.addEventListener("input", checkBirthDate)
-console.log(birthdate.value)
 
 //quantity
 function checkQuantity() {
@@ -138,11 +139,11 @@ function checkQuantity() {
     quantity.style.borderColor = "red";
     quantityError.style.fontSize = "20px";
     quantityError.style.display = "block";
-    return false
+    inputState.quantity = false;
   } else {
     quantityError.style.display = "none";
     quantity.style.borderColor = "black";
-    return true
+    inputState.quantity = true;
   }
 }
 quantity.addEventListener("input", checkQuantity)
@@ -155,11 +156,11 @@ function checkCity() {
     city.style.borderColor = "red";
     cityError.style.fontSize = "20px";
     cityError.style.display = "block";
-    return false
+    inputState.city = false;
   } else {
     cityError.style.display = "none";
     city.style.borderColor = "black";
-    return true
+    inputState.city = true;
   }
 }
 city.addEventListener("input", checkCity)
@@ -171,26 +172,42 @@ function checkBox() {
   if(checkbox1.checked) {
     checkbox1Error.style.display = "none";
     checkbox1.style.borderColor = "black";
-    return true
+    inputState.check = true;
   } else {
     checkbox1Error.textContent = "Veuillez accepter les conditions";
     checkbox1Error.style.color = "red";
     checkbox1.style.borderColor = "red";
     checkbox1Error.style.fontSize = "20px";
     checkbox1Error.style.display = "block";
-    return false
+    inputState.check = false;
+    console.log(inputState)
   }
 }
 checkbox1.addEventListener("input", checkBox)
 
 
 //validation global
-
-function checkGlobalValidation() {
-
-}
-
-
 let inputState = { 
-  birthdate : false
+  first : false,
+  last : false,
+  mail: false,
+  date : false,
+  quantity : false,
+  city : false,
+  check : true
 }
+
+function checkGlobalValidation(e) {
+  const hasUnvalidProperty = Object.keys(inputState).find(key => inputState[key] === false);
+  if(hasUnvalidProperty) {
+    e.preventDefault()
+    console.log("pas ok")
+  } else {
+  console.log("ok")
+  window.alert("Merci ! Votre réservation a été reçue.")
+  }
+}
+
+
+//bouton confirmation formulaire
+validateBtn.addEventListener("click", checkGlobalValidation)
