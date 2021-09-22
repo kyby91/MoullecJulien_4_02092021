@@ -60,7 +60,8 @@ function closeModal() {
 
 // first
 function checkFirstElementValue() {
-  if(first.value.length < 2 || first.value === " ") {
+  let regexp = /^[a-zA-Zéèîï][a-zéèêàçîï]+([-'\s][a-zA-Zéèîï][a-zéèêàçîï]+)?/
+  if(!regexp.test(first.value)) {
     firstError.textContent = "Veuillez entrer 2 caractères minimum";
     firstError.style.color = "red";
     first.style.borderColor = "red";
@@ -72,14 +73,14 @@ function checkFirstElementValue() {
       firstError.style.display = "none";
       first.style.borderColor = "black";
       inputState.first = true;
-      console.log(first)
     }
 }
 first.addEventListener("input", checkFirstElementValue)
 
 // last
 function checkLastElementValue() {
-  if(last.value.length < 2) {
+  let regexp = /^[a-zA-Zéèîï][a-zéèêàçîï]+([-'\s][a-zA-Zéèîï][a-zéèêàçîï]+)?/
+  if(!regexp.test(last.value)) {
     lastError.textContent = "Veuillez entrer 2 caractères minimum";
     lastError.style.color = "red";
     last.style.borderColor = "red";
@@ -151,15 +152,8 @@ quantity.addEventListener("input", checkQuantity)
 //city
 function checkCity() {
   if(!(location1.checked || location2.checked || location3.checked || location4.checked || location5.checked || location6.checked)) {
-    cityError.textContent = "Indiquer un nombre de participation";
-    cityError.style.color = "red";
-    city.style.borderColor = "red";
-    cityError.style.fontSize = "20px";
-    cityError.style.display = "block";
     inputState.city = false;
   } else {
-    cityError.style.display = "none";
-    city.style.borderColor = "black";
     inputState.city = true;
   }
 }
@@ -167,7 +161,7 @@ city.addEventListener("input", checkCity)
 
 
 //checkbox
-
+checkbox1Error.style.display = "none";
 function checkBox() {
   if(checkbox1.checked) {
     checkbox1Error.style.display = "none";
@@ -177,10 +171,9 @@ function checkBox() {
     checkbox1Error.textContent = "Veuillez accepter les conditions";
     checkbox1Error.style.color = "red";
     checkbox1.style.borderColor = "red";
-    checkbox1Error.style.fontSize = "20px";
+    checkbox1Error.style.fontSize = "15px";
     checkbox1Error.style.display = "block";
     inputState.check = false;
-    console.log(inputState)
   }
 }
 checkbox1.addEventListener("input", checkBox)
@@ -201,9 +194,17 @@ function checkGlobalValidation(e) {
   const hasUnvalidProperty = Object.keys(inputState).find(key => inputState[key] === false);
   if(hasUnvalidProperty) {
     e.preventDefault()
-    console.log("pas ok")
+    if(inputState.city === false) {
+      cityError.textContent = "Indiquer un nombre de participation";
+      cityError.style.color = "red";
+      city.style.borderColor = "red";
+      cityError.style.fontSize = "20px";
+      cityError.style.display = "block";
+    } else {
+      cityError.style.display = "none";
+      city.style.borderColor = "black";
+    }
   } else {
-  console.log("ok")
   window.alert("Merci ! Votre réservation a été reçue.")
   }
 }
