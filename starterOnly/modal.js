@@ -195,7 +195,7 @@ function checkGlobalValidation(e) {
   if(hasUnvalidProperty) {
     e.preventDefault()
     if(inputState.city === false) {
-      cityError.textContent = "Indiquer un nombre de participation";
+      cityError.textContent = "Veuiller choisir une ville";
       cityError.style.color = "red";
       city.style.borderColor = "red";
       cityError.style.fontSize = "20px";
