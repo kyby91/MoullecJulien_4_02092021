@@ -41,8 +41,9 @@ const checkbox1 = document.getElementById("checkbox1")
 const checkbox1Error = document.getElementById("checkbox1Error")
 
 const validateBtn = document.getElementById("validate")
+const finModal = document.getElementById("close")
 
-
+finModal.style.display = "none"
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 
@@ -75,7 +76,7 @@ function checkFirstElementValue() {
       inputState.first = true;
     }
 }
-first.addEventListener("input", checkFirstElementValue)
+
 
 // last
 function checkLastElementValue() {
@@ -93,7 +94,7 @@ function checkLastElementValue() {
       inputState.last = true;
     }
 }
-last.addEventListener("input", checkLastElementValue)
+
 
 // email
 function checkEmail() {
@@ -111,12 +112,12 @@ function checkEmail() {
     inputState.mail = false;
   }
 }
-email.addEventListener("input", checkEmail)
+
 
 
 //Birthdate
 function checkBirthDate() {
-  let regexp = /^((19[3-9]+[0-9]|200[0-9])-(0?[1-9]|1[0-2])-(0?[1-9]|[12]\d|3[01])|(0?[1-9]|[12]\d|3[01])[/](0?[1-9]|1[0-2])[/](19[3-9]+[0-9]|200[0-6]))$/
+  let regexp = /^((19[3-9]+[0-9]|202[0-9])-(0?[1-9]|1[0-2])-(0?[1-9]|[12]\d|3[01])|(0?[1-9]|[12]\d|3[01])[/](0?[1-9]|1[0-2])[/](19[3-9]+[0-9]|202[0-6]))$/
   if(regexp.test(birthdate.value)){
     birthdateError.style.display = "none";
     birthdate.style.borderColor = "black";
@@ -130,7 +131,7 @@ function checkBirthDate() {
     inputState.date = false;
   }
 }
-birthdate.addEventListener("input", checkBirthDate)
+
 
 //quantity
 function checkQuantity() {
@@ -147,17 +148,24 @@ function checkQuantity() {
     inputState.quantity = true;
   }
 }
-quantity.addEventListener("input", checkQuantity)
+
 
 //city
 function checkCity() {
   if(!(location1.checked || location2.checked || location3.checked || location4.checked || location5.checked || location6.checked)) {
     inputState.city = false;
+    cityError.textContent = "Veuiller choisir une ville";
+    cityError.style.color = "red";
+    city.style.borderColor = "red";
+    cityError.style.fontSize = "20px";
+    cityError.style.display = "block";
   } else {
     inputState.city = true;
+    cityError.style.display = "none";
+    city.style.borderColor = "black";
   }
 }
-city.addEventListener("input", checkCity)
+
 
 
 //checkbox
@@ -176,7 +184,7 @@ function checkBox() {
     inputState.check = false;
   }
 }
-checkbox1.addEventListener("input", checkBox)
+
 
 
 //validation global
@@ -191,24 +199,33 @@ let inputState = {
 }
 
 function checkGlobalValidation(e) {
+  checkFirstElementValue()
+  checkLastElementValue()
+  checkEmail()
+  checkBirthDate()
+  checkQuantity()
+  checkCity()
+  checkBox()
   const hasUnvalidProperty = Object.keys(inputState).find(key => inputState[key] === false);
   if(hasUnvalidProperty) {
     e.preventDefault()
-    if(inputState.city === false) {
-      cityError.textContent = "Veuiller choisir une ville";
-      cityError.style.color = "red";
-      city.style.borderColor = "red";
-      cityError.style.fontSize = "20px";
-      cityError.style.display = "block";
-    } else {
-      cityError.style.display = "none";
-      city.style.borderColor = "black";
-    }
   } else {
-  window.alert("Merci ! Votre réservation a été reçue.")
+    formData[0].style.display = "none";
+    formData[1].style.display = "none";
+    formData[2].style.display = "none";
+    formData[3].style.display = "none";
+    formData[4].style.display = "none";
+    formData[5].style.display = "none";
+    formData[6].style.display = "none";
+    document.querySelector(".text-label").style.display = "none";
+    validateBtn.style.display = "none";
+    finModal.style.display = "block"
+    e.preventDefault()
   }
 }
 
 
 //bouton confirmation formulaire
 validateBtn.addEventListener("click", checkGlobalValidation)
+
+finModal.addEventListener("click", closeModal)
