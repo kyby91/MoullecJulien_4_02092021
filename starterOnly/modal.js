@@ -42,8 +42,10 @@ const checkbox1Error = document.getElementById("checkbox1Error")
 
 const validateBtn = document.getElementById("validate")
 const finModal = document.getElementById("close")
+const final = document.getElementById("final")
 
 finModal.style.display = "none"
+final.style.display = "none"
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 
@@ -220,6 +222,7 @@ function checkGlobalValidation(e) {
     document.querySelector(".text-label").style.display = "none";
     validateBtn.style.display = "none";
     finModal.style.display = "block"
+    final.style.display = "block"
     e.preventDefault()
   }
 }

@@ -105,8 +105,7 @@ img {
     bottom: 500px;
   }
   .modal-body{
-    height: 500px;
-    min-height: unset;
+    height: 400px;
   }
 } 
 
@@ -346,7 +345,14 @@ input[data-error]::after {
 
 #close {
   position: absolute;
-  bottom: 5%; left: 27%;
+  bottom: 5%; left: 30%;
+}
+
+#final {
+  position: absolute;
+  top: 40%;
+  text-align: center;
+  margin-right: 30px;
 }
 /* custom select styles */
 .custom-select {
