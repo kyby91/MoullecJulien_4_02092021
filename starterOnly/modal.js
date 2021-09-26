@@ -46,6 +46,8 @@ const final = document.getElementById("final")
 
 finModal.style.display = "none"
 final.style.display = "none"
+
+
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 
@@ -61,7 +63,7 @@ function closeModal() {
   modalbg.style.display = "none";
 }
 
-// first
+// first, champ prénom
 function checkFirstElementValue() {
   let regexp = /^[a-zA-Zéèîï][a-zéèêàçîï]+([-'\s][a-zA-Zéèîï][a-zéèêàçîï]+)?/
   if(!regexp.test(first.value)) {
@@ -80,7 +82,7 @@ function checkFirstElementValue() {
 }
 
 
-// last
+// last, champ nom
 function checkLastElementValue() {
   let regexp = /^[a-zA-Zéèîï][a-zéèêàçîï]+([-'\s][a-zA-Zéèîï][a-zéèêàçîï]+)?/
   if(!regexp.test(last.value)) {
@@ -181,7 +183,7 @@ function checkBox() {
     checkbox1Error.textContent = "Veuillez accepter les conditions";
     checkbox1Error.style.color = "red";
     checkbox1.style.borderColor = "red";
-    checkbox1Error.style.fontSize = "15px";
+    checkbox1Error.style.fontSize = "20px";
     checkbox1Error.style.display = "block";
     inputState.check = false;
   }
@@ -190,6 +192,7 @@ function checkBox() {
 
 
 //validation global
+//objet, propriété pour chaque champ
 let inputState = { 
   first : false,
   last : false,
@@ -197,9 +200,11 @@ let inputState = {
   date : false,
   quantity : false,
   city : false,
+  // true coché de base
   check : true
 }
 
+//fonction regroupant tout les champs pour valider ou non
 function checkGlobalValidation(e) {
   checkFirstElementValue()
   checkLastElementValue()
@@ -208,9 +213,12 @@ function checkGlobalValidation(e) {
   checkQuantity()
   checkCity()
   checkBox()
+  //vérifie que toute les propriétés de l'objet soit vraie
   const hasUnvalidProperty = Object.keys(inputState).find(key => inputState[key] === false);
+  // si une ou plusieurs fausse la validation n'est pas posiible
   if(hasUnvalidProperty) {
     e.preventDefault()
+    // si toute vraie alors disparition des champs et apparition du text et du bouton
   } else {
     formData[0].style.display = "none";
     formData[1].style.display = "none";
@@ -223,12 +231,44 @@ function checkGlobalValidation(e) {
     validateBtn.style.display = "none";
     finModal.style.display = "block"
     final.style.display = "block"
+    // Affichage des infos saisies dans le console
+    info()
     e.preventDefault()
   }
 }
 
 
+// Récap info saisies
+function info() {
+  console.log("Prénom : "+ first.value)
+  console.log("Nom : "+ last.value)
+  console.log("E-mail : "+ email.value)
+  console.log("Date de naissance : "+ birthdate.value)
+  console.log("Nombre de tournois : "+ quantity.value)
+  if(location1.checked){
+    console.log("Ville : "+ location1.value)
+  }
+  if(location2.checked){
+    console.log("Ville : "+ location2.value)
+  }
+  if(location3.checked){
+    console.log("Ville : "+ location3.value)
+  }
+  if(location4.checked){
+    console.log("Ville : "+ location4.value)
+  }
+  if(location5.checked){
+    console.log("Ville : "+ location5.value)
+  }
+  if(location6.checked){
+    console.log("Ville : "+ location6.value)
+  }
+}
+
 //bouton confirmation formulaire
 validateBtn.addEventListener("click", checkGlobalValidation)
-
+//fermer la modal apres la validation
 finModal.addEventListener("click", closeModal)
+
+finModal.style.display = "none"
+final.style.display = "none"
