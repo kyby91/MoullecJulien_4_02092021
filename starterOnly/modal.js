@@ -44,9 +44,6 @@ const validateBtn = document.getElementById("validate")
 const finModal = document.getElementById("close")
 const final = document.getElementById("final")
 
-finModal.style.display = "none"
-final.style.display = "none"
-
 
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
