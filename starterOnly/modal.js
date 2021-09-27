@@ -73,7 +73,6 @@ function checkFirstElementValue() {
     firstError.style.fontSize = "20px";
     firstError.style.display = "block";
     inputState.first = false;
-    console.log(first.value)
     } else {
       firstError.style.display = "none";
       first.style.borderColor = "black";
